@@ -25,7 +25,7 @@ namespace FractionCalculation
     {
         private static void Main(string[] args)
         {
-            ConsoleMenu.Add("1", "Auswahl Menüpunkt 1", () => MenuPoint1());
+            ConsoleMenu.Add("1", "Demo Bruchrechnen", () => MenuPoint1());
             ConsoleMenu.Add("X", "Beenden", () => ApplicationExit());
 
             do
@@ -47,12 +47,21 @@ namespace FractionCalculation
             Bruch a = new Bruch(1, 2);
             Bruch b = new Bruch(3, 4);
 
-            Console.WriteLine(a + b); // 5/4
-            Console.WriteLine(a - b); // -1/4
-            Console.WriteLine(a * b); // 3/8
-            Console.WriteLine(a / b); // 2/3
+            Console.WriteLine($"Bruch A = {a.ToString()}");
+            Console.WriteLine($"Bruch B = {b.ToString()}");
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine($"1/2 + 3/4 = {a + b}"); // 5/4
+            Console.WriteLine($"1/2 - 3/4 = {a - b}"); // -1/4
+            Console.WriteLine($"1/2 * 3/4 = {a * b}"); // 3/8
+            Console.WriteLine($"1/2 + 3/4 = {a / b}"); // 2/3
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine($"1/2.ToString() = {a.ToString()}");
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine($"1/2.GetHashCode() = {a.GetHashCode()}");
+            Console.WriteLine($"3/4.GetHashCode() = {b.GetHashCode()}");
 
             bool isEqual = new Bruch(2, 4) == new Bruch(1, 2);
+            Console.WriteLine($"2/4 == 1/2 = {isEqual}");
 
             ConsoleMenu.Wait();
         }
@@ -64,7 +73,9 @@ namespace FractionCalculation
         public Bruch(int zaehler, int nenner)
         {
             if (nenner == 0)
+            {
                 throw new ArgumentException("Nenner darf nicht 0 sein.");
+            }
 
             // Vorzeichen vereinheitlichen
             if (nenner < 0)
@@ -107,18 +118,6 @@ namespace FractionCalculation
             return new Bruch(a.Zaehler * b.Nenner, a.Nenner * b.Zaehler);
         }
 
-        private static int Ggt(int a, int b)
-        {
-            while (b != 0)
-            {
-                int rest = a % b;
-                a = b;
-                b = rest;
-            }
-
-            return a;
-        }
-
         public static bool operator ==(Bruch a, Bruch b)
         {
             if (ReferenceEquals(a, b) == false)
@@ -151,7 +150,19 @@ namespace FractionCalculation
 
         public override string ToString()
         {
-            return $"{Zaehler}/{Nenner}";
+            return $"{this.Zaehler}/{this.Nenner}";
+        }
+
+        private static int Ggt(int a, int b)
+        {
+            while (b != 0)
+            {
+                int rest = a % b;
+                a = b;
+                b = rest;
+            }
+
+            return a;
         }
     }
 }
